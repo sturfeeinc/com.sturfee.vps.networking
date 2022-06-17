@@ -1,0 +1,20 @@
+{
+  "name": "com.sturfee.vps.networking",
+  "version": "1.0.0",
+  "displayName": "Sturfee VPS Networking",
+  "unity": "2020.3",
+  "unityRelease": "27f1",
+  "keywords": [
+    "sturfee",
+    "vps",
+    "localization",
+    "ar"
+  ],
+  "author": {
+    "name": "Sturfee Inc",
+    "email": "contact@sturfee.com",
+    "url": "https://sturfee.com"
+  },
+  "type": "library",
+  "description": "Networking SDK to Sturfee VPS"
+}
