@@ -17,6 +17,8 @@ namespace SturfeeVPS.Networking
         public bool InterpolateRotation;
         public bool SnapToSurfaceNormals;
         public bool SnapToTerrain;
+        public float StepOffset = 1;
+        public string[] TerrainLayers = new string[] { SturfeeLayers.Terrain };
 
         [Space(10)]
         [SyncVar]
@@ -92,7 +94,7 @@ namespace SturfeeVPS.Networking
 
                     if (SnapToTerrain)
                     {
-                        localPos.y = ElevationProvider.Instance.GetTerrainElevation(localPos) + 1.5f;
+                        localPos.y = ElevationProvider.Instance.GetTerrainElevation(localPos, StepOffset, LayerMask.GetMask(TerrainLayers)) + 1.5f;
                     }
 
                     if (InterpolatePosition && !forceUpdate)
