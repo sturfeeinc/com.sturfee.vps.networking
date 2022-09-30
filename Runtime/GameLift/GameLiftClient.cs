@@ -156,9 +156,22 @@ namespace SturfeeVPS.Networking
                     return null;
                 }
 
-                var gameSession = response.GameSessions.FirstOrDefault();
-                SturfeeDebug.Log(Newtonsoft.Json.JsonConvert.SerializeObject(gameSession));
-                return gameSession;
+                foreach(var session in response.GameSessions)
+                {
+                    if(session.Name != "corrupted")
+                    {
+                        var gameSession = session;
+                        SturfeeDebug.Log(Newtonsoft.Json.JsonConvert.SerializeObject(gameSession));
+                        return gameSession;
+                    }
+                    else
+                    {
+                        SturfeeDebug.Log($"Ignoring zombie gamesession {session.GameSessionId}");
+                    }
+                }
+
+                SturfeeDebug.Log($"No Gamesession running for filterExpression {filterExpression}");
+                return null;
             }
             catch (Exception ex)
             {
