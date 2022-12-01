@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.0.0] - 2022-12-01
+
+### Changes
+
+- VPS SDK update to v4.0
+
 ## [1.0.3] - 2022-09-16
 
 ### Fixes
