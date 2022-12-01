@@ -94,8 +94,7 @@ namespace SturfeeVPS.Networking
 
                     if (SnapToTerrain)
                     {
-                        //localPos.y = ElevationProvider.Instance.GetTerrainElevation(localPos, StepOffset, LayerMask.GetMask(TerrainLayers)) + 1.5f;
-                        localPos.y = GetElevation(Location);
+                        localPos.y = ElevationProvider.Instance.GetElevation(Location, StepOffset);                        
                     }
 
                     if (InterpolatePosition && !forceUpdate)
