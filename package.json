@@ -1,9 +1,9 @@
 {
   "name": "com.sturfee.vps.networking",
-  "version": "1.0.2",
+  "version": "4.0.0",
   "displayName": "Sturfee VPS Networking",
-  "unity": "2020.3",
-  "unityRelease": "27f1",
+  "unity": "2021.3",
+  "unityRelease": "9f1",
   "keywords": [
     "sturfee",
     "vps",

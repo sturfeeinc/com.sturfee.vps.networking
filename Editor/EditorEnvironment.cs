@@ -10,8 +10,8 @@ using UnityEditor;
 # if UNITY_EDITOR
 public class EditorEnvironment
 {
-    const string GameLiftServerPath = "Packages/com.sturfee.vps.newtworking/Runtime/Plugins/GameLift/Server/GameLiftServerSDKNet45.dll";
-    const string AWSSDKPath = "Packages/com.sturfee.vps.newtworking/Runtime/Plugins/GameLift/Client/AWSSDK.Core.dll";
+    const string GameLiftServerPath = "Packages/com.sturfee.vps.networking/Runtime/Plugins/GameLift/Server/GameLiftServerSDKNet45.dll";
+    const string AWSSDKPath = "Packages/com.sturfee.vps.networking/Runtime/Plugins/GameLift/Client/AWSSDK.Core.dll";
 
     const string ClientDefinition = "CLIENT";
     const string ServerDefinition = "SERVER";

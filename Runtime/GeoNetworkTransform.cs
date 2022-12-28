@@ -17,6 +17,8 @@ namespace SturfeeVPS.Networking
         public bool InterpolateRotation;
         public bool SnapToSurfaceNormals;
         public bool SnapToTerrain;
+        public float StepOffset = 1;
+        public string[] TerrainLayers = new string[] { SturfeeLayers.DigitalTwinTerrain };
 
         [Space(10)]
         [SyncVar]
@@ -92,7 +94,7 @@ namespace SturfeeVPS.Networking
 
                     if (SnapToTerrain)
                     {
-                        localPos.y = ElevationProvider.Instance.GetTerrainElevation(localPos) + 1.5f;
+                        localPos.y = ElevationProvider.Instance.GetElevation(Location, StepOffset);                        
                     }
 
                     if (InterpolatePosition && !forceUpdate)
@@ -126,6 +128,85 @@ namespace SturfeeVPS.Networking
 
             return pos;
         }
+
+
+        private float GetElevation(GeoLocation location)
+        {
+            // Get elevation from Sturg/DT/HDSite tiles
+            var terrainElevation = GetTerrainElevation(location);
+            // Get a small elevation on top of terrain elevation if exists.     example => footpath
+            var stepElevation = GetStepElevation(location, terrainElevation);
+
+            return stepElevation;
+        }
+
+        private float GetTerrainElevation(GeoLocation location)
+        {
+            float elevation = 0;
+
+            //check if Scanned using HD
+            bool hdsiteElevationNotFound = true;
+            var sturfeeVpsLocalizationProvider = XrSessionManager.GetSession().GetProvider<SturfeeVPSLocalizationProvider>();
+            if (sturfeeVpsLocalizationProvider != null && sturfeeVpsLocalizationProvider.GetProviderStatus() == ProviderStatus.Ready)
+            {
+                // localized using HD scan
+                if (sturfeeVpsLocalizationProvider.Scanner != null && sturfeeVpsLocalizationProvider.Scanner.ScanType == ScanType.HD)
+                {
+                    float hditeElevation = GetHDSiteElevation(location);
+                    if(hditeElevation != 0)
+                    {
+                        hdsiteElevationNotFound = false;
+                    }
+                }                
+            }
+
+            if (hdsiteElevationNotFound)
+            {
+                var tilesProvider = XrSessionManager.GetSession().GetProvider<ITilesProvider>();
+                if (tilesProvider != null && tilesProvider.GetProviderStatus() == ProviderStatus.Ready)
+                {
+                    elevation = tilesProvider.GetElevation(location);
+                }
+            }
+
+            return elevation;
+        }
+
+        private float GetStepElevation(GeoLocation location, float terrainElevation)
+        {
+            var stepElevation = terrainElevation;
+
+            Vector3 localPos = Converters.GeoToUnityPosition(location);
+            localPos.y = terrainElevation + StepOffset;
+
+            Ray ray = new Ray(localPos, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                stepElevation = hit.point.y;
+                Debug.Log($" step elevation : {stepElevation}");
+            }
+            return stepElevation;
+        }
+
+        private  float GetHDSiteElevation(GeoLocation location)
+        {
+            RaycastHit hit;
+
+            Vector3 unityPos = Converters.GeoToUnityPosition(location);
+            unityPos.y += 100;
+
+            Ray ray = new Ray(unityPos, Vector3.down);
+            Debug.DrawRay(ray.origin, ray.direction * 10000, Color.blue, 2000);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(SturfeeLayers.HDSiteTerrain)))
+            {
+                float elevation = hit.point.y;
+                //SturfeeDebug.Log("Elevation : " + elevation);
+                return elevation;
+            }
+
+            return 0;
+        }
+
 
         [Command]
         private void CmdTranslate(GeoLocation location)
