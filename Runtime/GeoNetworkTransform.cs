@@ -47,6 +47,9 @@ namespace SturfeeVPS.Networking
             }
         }
 
+        /// <summary>
+        /// Updates current player's transform on the network
+        /// </summary>
         public void UpdateNetwork()
         {
             if (Vector3.Distance(_lastPos, transform.position) >= PositionThreshold)
@@ -63,6 +66,9 @@ namespace SturfeeVPS.Networking
             }
         }
 
+        /// <summary>
+        /// Updates other players' transforms in the game scene.
+        /// </summary>
         public void UpdateLocal(bool forceUpdate = false)
         {            
             if (Rotation != null)
