@@ -18,7 +18,7 @@ using Mirror;
 public class SturfeeNetworkManager : NetworkManager
 {
 
-    private Dictionary<int, string> _gameLiftConnections = new Dictionary<int, string>();
+    protected Dictionary<int, string> _gameLiftConnections = new Dictionary<int, string>();
 
     #region Unity Callbacks
 
