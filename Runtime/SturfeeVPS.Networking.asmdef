@@ -2,13 +2,11 @@
     "name": "SturfeeVPS.Networking",
     "rootNamespace": "",
     "references": [
-        "GUID:30817c1a0e6d646d99c048fc403f5979",
-        "GUID:34326c4360e2d4760b399f1589bcd4dc",
-        "GUID:1a2810f97d211ef40ac4e52ad9eaaa2d",
-        "GUID:f3342bdf77841184fa43ed46b62683ee",
-        "GUID:81efed15009bc3848a0ef91022405536",
-        "GUID:2cbab47f8915e7b41af88def2e9184f0",
-        "GUID:b73836c7c71bf844b8366030ac3db968"
+        "Mirror",
+        "Sturfee.DigitalTwin.Logger",
+        "SturfeeVPS.DigitalTwin",
+        "SturfeeVPS.SDK",
+        "SturfeeVPS.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
